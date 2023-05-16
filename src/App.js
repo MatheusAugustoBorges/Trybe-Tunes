@@ -1,6 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
-import { Switch } from 'react-router-dom/cjs/react-router-dom.min';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Album from './pages/Album';
 import Favorites from './pages/Favorites';
 import Login from './pages/Login';
