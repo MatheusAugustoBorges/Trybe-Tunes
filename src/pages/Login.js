@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { createUser } from '../services/userAPI';
+import Loading from '../components/Loading';
 
 class Login extends Component {
   state = {
@@ -29,10 +30,10 @@ class Login extends Component {
   render() {
     const { userName, loading } = this.state;
     const minlengthName = 3;
-    const loadingElement = <span>Carregando...</span>;
+    // const loadingElement = <span>Carregando...</span>;
 
     return (
-      (loading) ? loadingElement : (
+      (loading) ? <Loading /> : (
         <div data-testid="page-login">
           <h2>Login</h2>
           <fieldset>
