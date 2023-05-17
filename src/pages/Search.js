@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Loading from '../components/Loading';
 import searchAlbumsAPI from '../services/searchAlbumsAPI';
@@ -32,6 +33,7 @@ class Search extends Component {
       searchResults: searchResultsApi,
       savedArtist: savedsearchArtist,
     });
+    // console.log(searchResultsApi);
   };
 
   render() {
@@ -68,24 +70,33 @@ class Search extends Component {
             >
               Pesquisar
             </button>
-            <p>{`Resultado de álbuns de: ${savedArtist}`}</p>
-            {
-              (searchResults === [])
-                ? <p>Nenhum álbum foi encontrado</p>
-                : (
-                  <div>
-                    {
-                      searchResults.map((result, index) => (
-                        <div key={ index }>
-                          <p>{result.artistName}</p>
-                          <p>{result.collectionName}</p>
-                          <img src={ result.artworkUrl100 } alt={ result.artistName } />
-                        </div>
-                      ))
-                    }
-                  </div>
-                )
-            }
+            <div>
+              {
+                (searchResults.length === 0)
+                  ? <p>Nenhum álbum foi encontrado</p>
+                  : (
+                    <div>
+                      <p>{`Resultado de álbuns de: ${savedArtist}`}</p>
+                      {
+                        searchResults.map((result, index) => (
+                          <div key={ index }>
+                            <p>{result.artistName}</p>
+                            <p>{result.collectionName}</p>
+                            <img src={ result.artworkUrl100 } alt={ result.artistName } />
+                            <br />
+                            <Link
+                              data-testid={ `link-to-album-${result.collectionId}` }
+                              to={ `/album/${result.collectionId}` }
+                            >
+                              Album
+                            </Link>
+                          </div>
+                        ))
+                      }
+                    </div>
+                  )
+              }
+            </div>
           </fieldset>
         </div>
       )
