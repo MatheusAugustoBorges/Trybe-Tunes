@@ -69,19 +69,23 @@ class Search extends Component {
               Pesquisar
             </button>
             <p>{`Resultado de álbuns de: ${savedArtist}`}</p>
-            <div>
-              {
-                searchResults.map((result, index) => (
-                  <div key={ index }>
-                    {/* <p>{`Nome do artista: ${result.artistName}`}</p>
-                    <p>{`Nome do álbum: ${result.collectionName}`}</p> */}
-                    <p>{result.artistName}</p>
-                    <p>{result.collectionName}</p>
-                    <img src={ result.artworkUrl100 } alt={ result.artistName } />
+            {
+              (searchResults === [])
+                ? <p>Nenhum álbum foi encontrado</p>
+                : (
+                  <div>
+                    {
+                      searchResults.map((result, index) => (
+                        <div key={ index }>
+                          <p>{result.artistName}</p>
+                          <p>{result.collectionName}</p>
+                          <img src={ result.artworkUrl100 } alt={ result.artistName } />
+                        </div>
+                      ))
+                    }
                   </div>
-                ))
-              }
-            </div>
+                )
+            }
           </fieldset>
         </div>
       )
