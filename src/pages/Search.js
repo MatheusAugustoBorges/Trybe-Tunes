@@ -80,14 +80,15 @@ class Search extends Component {
                       {
                         searchResults.map((result, index) => (
                           <div key={ index }>
-                            {/* <p>{result.artistName}</p>
-                            <p>{result.collectionName}</p> */}
-                            <img src={ result.artworkUrl100 } alt={ result.artistName } />
                             <br />
                             <Link
                               data-testid={ `link-to-album-${result.collectionId}` }
                               to={ `/album/${result.collectionId}` }
                             >
+                              <img
+                                src={ result.artworkUrl100 }
+                                alt={ result.artistName }
+                              />
                               <p>{result.artistName}</p>
                               <p>{result.collectionName}</p>
                             </Link>
