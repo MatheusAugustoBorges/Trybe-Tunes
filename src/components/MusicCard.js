@@ -6,7 +6,6 @@ import Loading from './Loading';
 class MusicCard extends Component {
   state = {
     loading: false,
-    loadingChecks: false,
     favoriteCheck: false,
   };
 
@@ -44,7 +43,7 @@ class MusicCard extends Component {
 
   loadingChecks = () => {
     this.setState({
-      favoriteCheck: 'checked',
+      favoriteCheck: true,
     });
   };
 
@@ -56,35 +55,33 @@ class MusicCard extends Component {
 
   render() {
     const { name, musicPlayer, trackId } = this.props;
-    const { loading, loadingChecks, favoriteCheck } = this.state;
+    const { loading, favoriteCheck } = this.state;
     return (
-      (loadingChecks) ? <Loading /> : (
-        <div>
-          <p>{ name }</p>
-          <audio data-testid="audio-component" src={ `${musicPlayer}` } controls>
-            <track kind="captions" />
-            O seu navegador não suporta o elemento
-            {' '}
-            <code>audio</code>
-            .
-          </audio>
-          <br />
-          {loading && <Loading />}
-          <label>
-            Favorita
-            <input
-              data-testid={ `checkbox-music-${trackId}` }
-              id="favoriteMusic"
-              type="checkbox"
-              name="favoriteMusic"
-              checked={ favoriteCheck }
-              onChange={ this.onInputChange }
-              onClick={ ({ target }) => (target.checked
-                ? this.loadingChecks() : this.loadingUnchecks()) }
-            />
-          </label>
-        </div>
-      )
+      <div>
+        <p>{ name }</p>
+        <audio data-testid="audio-component" src={ `${musicPlayer}` } controls>
+          <track kind="captions" />
+          O seu navegador não suporta o elemento
+          {' '}
+          <code>audio</code>
+          .
+        </audio>
+        <br />
+        {loading && <Loading />}
+        <label>
+          Favorita
+          <input
+            data-testid={ `checkbox-music-${trackId}` }
+            id="favoriteMusic"
+            type="checkbox"
+            name="favoriteMusic"
+            checked={ favoriteCheck }
+            onChange={ this.onInputChange }
+            onClick={ ({ target }) => (target.checked
+              ? this.loadingChecks() : this.loadingUnchecks()) }
+          />
+        </label>
+      </div>
     );
   }
 }
