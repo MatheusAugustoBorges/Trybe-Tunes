@@ -30,7 +30,6 @@ class Login extends Component {
   render() {
     const { userName, loading } = this.state;
     const minlengthName = 3;
-    // const loadingElement = <span>Carregando...</span>;
 
     return (
       (loading) ? <Loading /> : (

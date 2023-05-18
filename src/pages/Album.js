@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import getMusics from '../services/musicsAPI';
 import MusicCard from '../components/MusicCard';
+import { addSong } from '../services/favoriteSongsAPI';
+import Loading from '../components/Loading';
 
 class Album extends Component {
   state = {
@@ -13,6 +15,27 @@ class Album extends Component {
   componentDidMount() {
     this.getId();
   }
+
+  onInputChange = ({ target }) => {
+    const { name } = target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    this.setState({
+      [name]: value,
+    });
+    const { getMusicsResultsAPI } = this.state;
+    getMusicsResultsAPI.map((music) => music.trackId === Number(name)
+      && this.setState(
+        {
+          loading: true,
+        },
+        async () => {
+          await addSong(music);
+          this.setState({
+            loading: false,
+          });
+        },
+      ));
+  };
 
   getId = async () => {
     const { match: {
@@ -27,10 +50,11 @@ class Album extends Component {
   };
 
   render() {
-    const { infos, getMusicsResultsAPI } = this.state;
+    const { infos, getMusicsResultsAPI, loading } = this.state;
     return (
       <div data-testid="page-album">
         <Header />
+        {(loading) && <Loading />}
         <h2>Artist</h2>
         <p data-testid="artist-name">{infos.artistName}</p>
         <h2>Album</h2>
@@ -42,6 +66,8 @@ class Album extends Component {
               key={ index }
               name={ music.trackName }
               music={ music.previewUrl }
+              trackId={ music.trackId }
+              onInputChange={ this.onInputChange }
             />
           ))
         }
