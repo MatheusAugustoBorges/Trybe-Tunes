@@ -23,7 +23,8 @@ class Album extends Component {
       [name]: value,
     });
     const { getMusicsResultsAPI } = this.state;
-    getMusicsResultsAPI.map((music) => music.trackId === Number(name)
+    if (target.checked) {
+      getMusicsResultsAPI.map((music) => music.trackId === Number(name)
       && this.setState(
         {
           loading: true,
@@ -35,6 +36,7 @@ class Album extends Component {
           });
         },
       ));
+    }
   };
 
   getId = async () => {

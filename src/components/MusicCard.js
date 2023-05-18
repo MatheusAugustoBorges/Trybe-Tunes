@@ -35,7 +35,6 @@ MusicCard.propTypes = {
   music: PropTypes.string,
   trackId: PropTypes.string,
   onInputChange: PropTypes.func,
-  addSong: PropTypes.func,
 }.isRequired;
 
 export default MusicCard;
