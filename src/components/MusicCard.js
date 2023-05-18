@@ -7,11 +7,17 @@ class MusicCard extends Component {
   state = {
     loading: false,
     loadingChecks: false,
-    favoriteMusicsRecover: [],
+    favoriteCheck: false,
   };
 
-  componentDidMount() {
-    this.getFavoriteMusics();
+  async componentDidMount() {
+    const { trackId } = this.props;
+    const favoriteMusicsStorage = await getFavoriteSongs();
+    const check = favoriteMusicsStorage
+      .some((musicStorage) => trackId === musicStorage.trackId);
+    this.setState({
+      favoriteCheck: check,
+    });
   }
 
   onInputChange = ({ target }) => {
@@ -36,20 +42,21 @@ class MusicCard extends Component {
     });
   };
 
-  getFavoriteMusics = async () => {
+  loadingChecks = () => {
     this.setState({
-      loadingChecks: true,
+      favoriteCheck: 'checked',
     });
-    const favoriteMusicsStorage = await getFavoriteSongs();
+  };
+
+  loadingUnchecks = () => {
     this.setState({
-      loadingChecks: false,
-      favoriteMusicsRecover: favoriteMusicsStorage,
+      favoriteCheck: false,
     });
   };
 
   render() {
     const { name, musicPlayer, trackId } = this.props;
-    const { loading, loadingChecks, favoriteMusicsRecover } = this.state;
+    const { loading, loadingChecks, favoriteCheck } = this.state;
     return (
       (loadingChecks) ? <Loading /> : (
         <div>
@@ -70,9 +77,10 @@ class MusicCard extends Component {
               id="favoriteMusic"
               type="checkbox"
               name="favoriteMusic"
-              checked={ favoriteMusicsRecover
-                .some((musicStorage) => trackId === musicStorage.trackId) }
+              checked={ favoriteCheck }
               onChange={ this.onInputChange }
+              onClick={ ({ target }) => (target.checked
+                ? this.loadingChecks() : this.loadingUnchecks()) }
             />
           </label>
         </div>
