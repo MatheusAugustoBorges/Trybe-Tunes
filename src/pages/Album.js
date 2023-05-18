@@ -40,8 +40,9 @@ class Album extends Component {
           getMusicsResultsAPI.map((music, index) => (
             <MusicCard
               key={ index }
+              musicObj={ music }
               name={ music.trackName }
-              music={ music.previewUrl }
+              musicPlayer={ music.previewUrl }
               trackId={ music.trackId }
             />
           ))
